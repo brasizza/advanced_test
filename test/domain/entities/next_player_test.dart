@@ -19,7 +19,6 @@ class NexEventPlayer {
 
   String get initials {
     final names = name.split(' ');
-
     final firstChar = names.first[0];
     final lastChar = names.last[0];
     return '$firstChar$lastChar'.toUpperCase();
@@ -27,17 +26,14 @@ class NexEventPlayer {
 }
 
 void main() {
-  NexEventPlayer makeSut(String name) => NexEventPlayer(
+  String initialsOf(String name) => NexEventPlayer(
         id: '',
         name: name,
         isConfirmed: true,
-      );
+      ).initials;
   test('should return the first letter of the first and last names', () async {
-    final sut = makeSut('Marcus Brasizza');
-    expect(sut.initials, 'MB');
-    final sut2 = makeSut('Kleber Bambam');
-    expect(sut2.initials, 'KB');
-    final sut3 = makeSut('Ingrid Mota Silva');
-    expect(sut3.initials, 'IS');
+    expect(initialsOf('Marcus Brasizza'), 'MB');
+    expect(initialsOf('Kleber Bambam'), 'KB');
+    expect(initialsOf('Ingrid Mota Silva'), 'IS');
   });
 }
