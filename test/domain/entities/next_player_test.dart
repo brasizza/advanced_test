@@ -38,7 +38,7 @@ class NexEventPlayer {
       );
 
   static String _getInitials(String name) {
-    final names = name.toUpperCase().split(' ');
+    final names = name.toUpperCase().trim().split(' ');
     if (names.length == 1) {
       if (names.first.length == 1) {
         return names.first[0];
@@ -79,5 +79,13 @@ void main() {
     expect(initialsOf('kleber bambam'), 'KB');
     expect(initialsOf('r'), 'R');
     expect(initialsOf('ingrid mota silva'), 'IS');
+  });
+
+  test('should ignore extra white spaces', () async {
+    expect(initialsOf('Marcus Brasizza '), 'MB');
+    expect(initialsOf(' Marcus Brasizza'), 'MB');
+    expect(initialsOf('  Marcus      Brasizza  '), 'MB');
+    expect(initialsOf('r '), 'R');
+    expect(initialsOf('  '), '-');
   });
 }
