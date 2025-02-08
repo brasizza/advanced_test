@@ -19,7 +19,10 @@ class NexEventPlayer {
 
   String get initials {
     final names = name.split(' ');
-    return names[0][0] + names[1][0];
+
+    final firstChar = names.first[0];
+    final lastChar = names.last[0];
+    return '$firstChar$lastChar'.toUpperCase();
   }
 }
 
@@ -34,8 +37,29 @@ void main() {
       confirmationData: DateTime.now(),
     );
 
-    var initials = player.initials;
-    expect(initials, 'MB');
+    expect(player.initials, 'MB');
+
+    final player2 = NexEventPlayer(
+      id: '',
+      name: 'Kleber Bambam',
+      photo: '',
+      position: '',
+      isConfirmed: true,
+      confirmationData: DateTime.now(),
+    );
+
+    expect(player2.initials, 'KB');
+
+    final player3 = NexEventPlayer(
+      id: '',
+      name: 'Ingrid Mota Silva',
+      photo: '',
+      position: '',
+      isConfirmed: true,
+      confirmationData: DateTime.now(),
+    );
+
+    expect(player3.initials, 'IS');
 
     //Act
 
