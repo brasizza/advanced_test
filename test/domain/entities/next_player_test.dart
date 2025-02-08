@@ -11,10 +11,10 @@ class NexEventPlayer {
   NexEventPlayer({
     required this.id,
     required this.name,
-    required this.photo,
-    required this.position,
+    this.photo,
+    this.position,
     required this.isConfirmed,
-    required this.confirmationData,
+    this.confirmationData,
   });
 
   String get initials {
@@ -27,42 +27,17 @@ class NexEventPlayer {
 }
 
 void main() {
+  NexEventPlayer makeSut(String name) => NexEventPlayer(
+        id: '',
+        name: name,
+        isConfirmed: true,
+      );
   test('should return the first letter of the first and last names', () async {
-    final player = NexEventPlayer(
-      id: '',
-      name: 'Marcus Brasizza',
-      photo: '',
-      position: '',
-      isConfirmed: true,
-      confirmationData: DateTime.now(),
-    );
-
-    expect(player.initials, 'MB');
-
-    final player2 = NexEventPlayer(
-      id: '',
-      name: 'Kleber Bambam',
-      photo: '',
-      position: '',
-      isConfirmed: true,
-      confirmationData: DateTime.now(),
-    );
-
-    expect(player2.initials, 'KB');
-
-    final player3 = NexEventPlayer(
-      id: '',
-      name: 'Ingrid Mota Silva',
-      photo: '',
-      position: '',
-      isConfirmed: true,
-      confirmationData: DateTime.now(),
-    );
-
-    expect(player3.initials, 'IS');
-
-    //Act
-
-    //Assert
+    final sut = makeSut('Marcus Brasizza');
+    expect(sut.initials, 'MB');
+    final sut2 = makeSut('Kleber Bambam');
+    expect(sut2.initials, 'KB');
+    final sut3 = makeSut('Ingrid Mota Silva');
+    expect(sut3.initials, 'IS');
   });
 }
