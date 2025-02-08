@@ -2,11 +2,7 @@ import 'package:advanced_test/domain/entities/next_player_event.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  String initialsOf(String name) => NexEventPlayer(
-        id: '',
-        name: name,
-        isConfirmed: true,
-      ).initials;
+  String initialsOf(String name) => NexEventPlayer(id: '', name: name, isConfirmed: true).initials;
   test('should return the first letter of the first and last names', () async {
     expect(initialsOf('Marcus Brasizza'), 'MB');
     expect(initialsOf('Kleber Bambam'), 'KB');
