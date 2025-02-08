@@ -68,6 +68,9 @@ void main() {
   test('should return the first letters of the first name', () async {
     expect(initialsOf('Kleber'), 'KL');
     expect(initialsOf('R'), 'R');
+  });
+
+  test('should return - when name is empty', () async {
     expect(initialsOf(''), '-');
   });
 
