@@ -38,10 +38,13 @@ class NexEventPlayer {
       );
 
   static String _getInitials(String name) {
-    final names = name.split(' ');
+    final names = name.toUpperCase().split(' ');
+    if (names.length == 1) {
+      return names[0][0] + names[0][1];
+    }
     final firstChar = names.first[0];
     final lastChar = names.last[0];
-    return '$firstChar$lastChar'.toUpperCase();
+    return '$firstChar$lastChar';
   }
 }
 
@@ -55,5 +58,15 @@ void main() {
     expect(initialsOf('Marcus Brasizza'), 'MB');
     expect(initialsOf('Kleber Bambam'), 'KB');
     expect(initialsOf('Ingrid Mota Silva'), 'IS');
+  });
+
+  test('should return the first letters of the first name', () async {
+    expect(initialsOf('Kleber'), 'KL');
+  });
+
+  test('should convert to uppercase', () async {
+    expect(initialsOf('marcus brasizza'), 'MB');
+    expect(initialsOf('kleber bambam'), 'KB');
+    expect(initialsOf('kleber'), 'KL');
   });
 }
