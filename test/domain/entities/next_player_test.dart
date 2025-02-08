@@ -40,6 +40,11 @@ class NexEventPlayer {
   static String _getInitials(String name) {
     final names = name.toUpperCase().split(' ');
     if (names.length == 1) {
+      if (names.first.length == 1) {
+        return names.first[0];
+      } else if (names.first.isEmpty) {
+        return '-';
+      }
       return names[0][0] + names[0][1];
     }
     final firstChar = names.first[0];
@@ -62,11 +67,14 @@ void main() {
 
   test('should return the first letters of the first name', () async {
     expect(initialsOf('Kleber'), 'KL');
+    expect(initialsOf('R'), 'R');
+    expect(initialsOf(''), '-');
   });
 
   test('should convert to uppercase', () async {
     expect(initialsOf('marcus brasizza'), 'MB');
     expect(initialsOf('kleber bambam'), 'KB');
-    expect(initialsOf('kleber'), 'KL');
+    expect(initialsOf('r'), 'R');
+    expect(initialsOf('ingrid mota silva'), 'IS');
   });
 }
