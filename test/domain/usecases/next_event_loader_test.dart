@@ -24,11 +24,17 @@ class LoadNextMockCacheRepository implements LoadNextEventRepository {
   }
 }
 
-void main() {
+void main() async {
+  late String groupId;
+  late LoadNextMockCacheRepository repo;
+  late NextEventLoader sut;
+
+  setUp(() {
+    groupId = Random().nextInt(9999).toString();
+    repo = LoadNextMockCacheRepository();
+    sut = NextEventLoader(repository: repo);
+  });
   test('should load event data from a repository', () async {
-    final groupId = Random().nextInt(9999).toString();
-    final repo = LoadNextMockCacheRepository();
-    final sut = NextEventLoader(repository: repo);
     await sut(groupId: groupId);
     expect(repo.groupId, groupId);
     expect(repo.callsCount, 1);
