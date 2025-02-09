@@ -1,18 +1,8 @@
 import 'dart:math';
 
+import 'package:advanced_test/domain/entities/next_event.dart';
 import 'package:advanced_test/domain/entities/next_player_event.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-class NextEvent {
-  final String groupName;
-  final DateTime date;
-  final List<NexEventPlayer> players;
-  NextEvent({
-    required this.groupName,
-    required this.date,
-    required this.players,
-  });
-}
 
 class NextEventLoader {
   final LoadNextEventRepository _repository;
