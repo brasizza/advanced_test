@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:advanced_test/domain/entities/next_event.dart';
 import 'package:advanced_test/domain/entities/next_player_event.dart';
+import 'package:advanced_test/domain/repositories/load_next_event_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class NextEventLoader {
@@ -13,10 +14,6 @@ class NextEventLoader {
   Future<NextEvent> call({required String groupId}) async {
     return await _repository.loadNextEvent(groupId: groupId);
   }
-}
-
-abstract interface class LoadNextEventRepository {
-  Future<NextEvent> loadNextEvent({required String groupId});
 }
 
 class LoadNextSpyCacheRepository implements LoadNextEventRepository {
