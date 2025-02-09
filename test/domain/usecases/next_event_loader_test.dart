@@ -16,7 +16,10 @@ class NextEvent {
 
 class NextEventLoader {
   final LoadNextEventRepository _repository;
-  NextEventLoader({required LoadNextEventRepository repository}) : _repository = repository;
+  NextEventLoader({
+    required LoadNextEventRepository repository,
+  }) : _repository = repository;
+
   Future<NextEvent> call({required String groupId}) async {
     return await _repository.loadNextEvent(groupId: groupId);
   }
@@ -31,9 +34,13 @@ class LoadNextSpyCacheRepository implements LoadNextEventRepository {
   NextEvent? output;
 
   String? groupId;
+
+  Error? error;
   @override
   Future<NextEvent> loadNextEvent({required String groupId}) async {
     callsCount++;
+
+    if (error != null) throw error!;
     this.groupId = groupId;
     return output!;
   }
@@ -81,5 +88,12 @@ void main() async {
     expect(event.players[1].position, repo.output?.players[1].position);
     expect(event.players[1].isConfirmed, repo.output?.players[1].isConfirmed);
     expect(event.players[1].confirmationData, repo.output?.players[1].confirmationData);
+  });
+
+  test('should  rethow on error', () async {
+    final error = Error();
+    repo.error = error;
+    final future = sut(groupId: groupId);
+    expect(future, throwsA(error));
   });
 }
