@@ -3,18 +3,8 @@ import 'dart:math';
 import 'package:advanced_test/domain/entities/next_event.dart';
 import 'package:advanced_test/domain/entities/next_player_event.dart';
 import 'package:advanced_test/domain/repositories/load_next_event_repository.dart';
+import 'package:advanced_test/domain/usecases/next_event_loader.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-class NextEventLoader {
-  final LoadNextEventRepository _repository;
-  NextEventLoader({
-    required LoadNextEventRepository repository,
-  }) : _repository = repository;
-
-  Future<NextEvent> call({required String groupId}) async {
-    return await _repository.loadNextEvent(groupId: groupId);
-  }
-}
 
 class LoadNextSpyCacheRepository implements LoadNextEventRepository {
   var callsCount = 0;
