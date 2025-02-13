@@ -1,10 +1,10 @@
-import 'dart:math';
-
 import 'package:advanced_test/domain/entities/next_event.dart';
 import 'package:advanced_test/domain/entities/next_player_event.dart';
 import 'package:advanced_test/domain/repositories/load_next_event_repository.dart';
 import 'package:advanced_test/domain/usecases/next_event_loader.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/fakes.dart';
 
 class LoadNextSpyCacheRepository implements LoadNextEventRepository {
   var callsCount = 0;
@@ -29,7 +29,7 @@ void main() async {
   late NextEventLoader sut;
 
   setUp(() {
-    groupId = Random().nextInt(9999).toString();
+    groupId = Fakes.anyString();
     repo = LoadNextSpyCacheRepository();
     sut = NextEventLoader(repository: repo);
 
