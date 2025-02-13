@@ -8,26 +8,40 @@ import '../../helpers/fakes.dart';
 
 class LoadNextEventHttpRepository {
   final Client httpClient;
-  LoadNextEventHttpRepository({required this.httpClient});
+  final String url;
+  LoadNextEventHttpRepository({required this.httpClient, required this.url});
   loadNextEvent({required groupId}) async {
-    await httpClient.get(Uri.parse(''));
+    await httpClient.get(Uri.parse(url.replaceAll(':groupId', groupId)));
   }
 }
 
 void main() {
+  setUp(() {});
   test('sould request with correct method', () async {
     final httpClient = HttpClientSpy();
-    final sut = LoadNextEventHttpRepository(httpClient: httpClient);
     var groupId = Fakes.anyString();
+    const url = 'https://domain.com.br/api/groups/:groupId/next_event';
+    final sut = LoadNextEventHttpRepository(httpClient: httpClient, url: url);
+
     await sut.loadNextEvent(groupId: groupId);
     expect(httpClient.method, 'get');
     expect(httpClient.callsCount, 1);
+  });
+
+  test('sould request with correct url', () async {
+    final httpClient = HttpClientSpy();
+    const url = 'https://domain.com.br/api/groups/:groupId/next_event';
+    final sut = LoadNextEventHttpRepository(httpClient: httpClient, url: url);
+    var groupId = Fakes.anyString();
+    await sut.loadNextEvent(groupId: groupId);
+    expect(httpClient.url, 'https://domain.com.br/api/groups/$groupId/next_event');
   });
 }
 
 class HttpClientSpy implements Client {
   String? method;
   int callsCount = 0;
+  String? url = '';
   @override
   void close() {}
 
@@ -40,6 +54,7 @@ class HttpClientSpy implements Client {
   Future<Response> get(Uri url, {Map<String, String>? headers}) async {
     method = 'get';
     callsCount++;
+    this.url = url.toString();
     return Response('', 200);
   }
 
