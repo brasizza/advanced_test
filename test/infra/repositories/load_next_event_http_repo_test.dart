@@ -16,13 +16,21 @@ class LoadNextEventHttpRepository {
 }
 
 void main() {
-  setUp(() {});
-  test('sould request with correct method', () async {
-    final httpClient = HttpClientSpy();
-    var groupId = Fakes.anyString();
-    const url = 'https://domain.com.br/api/groups/:groupId/next_event';
-    final sut = LoadNextEventHttpRepository(httpClient: httpClient, url: url);
+  late String groupId;
+  late String url;
+  late HttpClientSpy httpClient;
+  late LoadNextEventHttpRepository sut;
 
+  setUpAll(() {
+    url = 'https://domain.com.br/api/groups/:groupId/next_event';
+  });
+
+  setUp(() {
+    httpClient = HttpClientSpy();
+    groupId = Fakes.anyString();
+    sut = LoadNextEventHttpRepository(httpClient: httpClient, url: url);
+  });
+  test('sould request with correct method', () async {
     await sut.loadNextEvent(groupId: groupId);
     expect(httpClient.method, 'get');
     expect(httpClient.callsCount, 1);
