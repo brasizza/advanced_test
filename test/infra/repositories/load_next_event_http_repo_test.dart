@@ -28,7 +28,13 @@ class LoadNextEventHttpRepository implements LoadNextEventRepository {
           'accept': 'application/json',
         });
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 400) {
+      throw DomainError.unexpectedError;
+    } else if (response.statusCode == 403) {
+      throw DomainError.unexpectedError;
+    } else if (response.statusCode == 404) {
+      throw DomainError.unexpectedError;
+    } else if (response.statusCode == 500) {
       throw DomainError.unexpectedError;
     }
 
@@ -129,6 +135,27 @@ void main() {
 
   test('should throw unexpectedError on 400 ', () async {
     httpClient.statusCode = 400;
+    var groupId = Fakes.anyString();
+    final future = sut.loadNextEvent(groupId: groupId);
+    expect(future, throwsA(DomainError.unexpectedError));
+  });
+
+  test('should throw unexpectedError on 403 ', () async {
+    httpClient.statusCode = 403;
+    var groupId = Fakes.anyString();
+    final future = sut.loadNextEvent(groupId: groupId);
+    expect(future, throwsA(DomainError.unexpectedError));
+  });
+
+  test('should throw unexpectedError on 404 ', () async {
+    httpClient.statusCode = 404;
+    var groupId = Fakes.anyString();
+    final future = sut.loadNextEvent(groupId: groupId);
+    expect(future, throwsA(DomainError.unexpectedError));
+  });
+
+  test('should throw unexpectedError on 500 ', () async {
+    httpClient.statusCode = 500;
     var groupId = Fakes.anyString();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpectedError));
